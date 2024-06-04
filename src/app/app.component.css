@@ -1,0 +1,25 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.operations {
+  height: 100%;
+}
+
+.responses {
+  height: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.imageForm {
+  display: flex;
+  flex-direction: column;
+}
