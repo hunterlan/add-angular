@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {ImageType} from "../models/image-type";
 import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ImageService {
     return this.httpClient.get<string[]>(this.path, {params: httpParams});
   }
 
-  put() {
-
+  put(image: string): Observable<any> {
+    return this.httpClient.put(this.path, {"image": image});
   }
 }

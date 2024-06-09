@@ -11,11 +11,12 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {ImageType} from "./models/image-type";
 import {NgIf} from "@angular/common";
 import {ImageSliderComponent} from "./components/image-slider/image-slider.component";
+import {ImageUploaderComponent} from "./components/image-uploader/image-uploader.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatTab, MatTabGroup, MatCard, MatCardHeader, MatCardContent, MatButton, MatFormField, MatSelect, MatOption, MatFormFieldModule, MatInput, ReactiveFormsModule, NgIf, ImageSliderComponent],
+  imports: [RouterOutlet, MatTab, MatTabGroup, MatCard, MatCardHeader, MatCardContent, MatButton, MatFormField, MatSelect, MatOption, MatFormFieldModule, MatInput, ReactiveFormsModule, NgIf, ImageSliderComponent, ImageUploaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -37,5 +38,9 @@ export class AppComponent {
         this.images = images.map(i => i.replaceAll('\'' ,'').replace('b', 'data:image/png;base64,'))
       });
     }
+  }
+
+  uploadImage(base64Image: string) {
+    this.imageService.put(base64Image);
   }
 }

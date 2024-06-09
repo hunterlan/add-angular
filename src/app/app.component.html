@@ -18,7 +18,9 @@
           <button mat-button type="submit" (click)="submit()" [disabled]="imageSubmitForm.invalid">Submit</button>
         </form>
       </mat-tab>
-      <mat-tab label="Upload image"></mat-tab>
+      <mat-tab label="Upload image">
+        <app-image-uploader (sendImage)="uploadImage($event)"></app-image-uploader>
+      </mat-tab>
       <mat-tab label="Classify image"></mat-tab>
       <mat-tab label="Get classified image"></mat-tab>
     </mat-tab-group>
