@@ -1,7 +1,7 @@
 <div>
-  <form (submit)="onSubmit()">
+  <form>
     <label for="imageInput">Select an image:</label>
     <input type="file" id="imageInput" (change)="onFileSelected($event)" accept="image/*" />
-    <button type="submit">Upload</button>
+    <button (click)="onSubmit()">Upload</button>
   </form>
 </div>

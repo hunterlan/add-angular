@@ -1,3 +1,3 @@
 export interface ClassificationResponse {
-  requestId: string;
+  request_id: string;
 }

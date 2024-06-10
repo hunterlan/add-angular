@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NgIf} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-image-uploader',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './image-uploader.component.html',
   styleUrl: './image-uploader.component.css'
@@ -19,7 +22,7 @@ export class ImageUploaderComponent {
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       this.convertToBase64(file).then((base64: string) => {
-        this.base64Image = base64;
+        this.base64Image = base64.replace('data:image/jpeg;base64,', '');
       }).catch(error => {
         console.error('Error converting file to Base64:', error);
       });
@@ -37,7 +40,6 @@ export class ImageUploaderComponent {
 
   onSubmit(): void {
     if (this.base64Image) {
-      console.log('Base64 Image:', this.base64Image);
       this.sendImage.emit(this.base64Image);
     } else {
       console.warn('No image selected.');

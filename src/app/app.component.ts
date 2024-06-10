@@ -12,6 +12,8 @@ import {ImageType} from "./models/image-type";
 import {NgIf} from "@angular/common";
 import {ImageSliderComponent} from "./components/image-slider/image-slider.component";
 import {ImageUploaderComponent} from "./components/image-uploader/image-uploader.component";
+import {ClassificationService} from "./services/classification.service";
+import {ClassificationResult} from "./models/classification-result";
 
 @Component({
   selector: 'app-root',
@@ -26,10 +28,16 @@ export class AppComponent {
     count: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
     imageType: new FormControl<ImageType>(ImageType.Raw, [Validators.required]),
   });
+  getClassificationResultForm = new FormGroup({
+    requestId: new FormControl<string>('', [Validators.required]),
+  });
   tabIndex = 0;
   images: string[] = [];
+  classificationRequestId: string = '';
+  classificationReport: ClassificationResult | undefined;
 
-  constructor(private readonly imageService: ImageService) {}
+  constructor(private readonly imageService: ImageService,
+              private readonly classificationService: ClassificationService) {}
 
   submit() {
     if (this.imageSubmitForm.valid) {
@@ -40,7 +48,29 @@ export class AppComponent {
     }
   }
 
+  reportRequestSubmit() {
+    if (this.getClassificationResultForm.valid) {
+      const form = this.getClassificationResultForm.value;
+      this.classificationService.get(form.requestId!).subscribe({
+        next: (value) => {this.classificationReport = value},
+        error: () => {}
+      });
+    }
+  }
+
   uploadImage(base64Image: string) {
-    this.imageService.put(base64Image);
+    this.imageService.put(base64Image)
+      .subscribe({
+        next: () => {},
+        error: () => {}
+      });
+  }
+
+  classifyImage(base64Image: string) {
+    this.classificationService.require(base64Image)
+      .subscribe({
+        next: (value) => {this.classificationRequestId = value.request_id},
+        error: () => {}
+      });
   }
 }

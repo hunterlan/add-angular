@@ -17,21 +17,57 @@
           </mat-form-field>
           <button mat-button type="submit" (click)="submit()" [disabled]="imageSubmitForm.invalid">Submit</button>
         </form>
+        <div class="responses">
+          <ng-container *ngIf="tabIndex == 0 && images.length > 0">
+            <app-image-slider [images]="images"></app-image-slider>
+          </ng-container>
+          <ng-container *ngIf="tabIndex == 0 && images.length < 1">
+            <p>No images have been retrieved yet.</p>
+          </ng-container>
+        </div>
       </mat-tab>
       <mat-tab label="Upload image">
         <app-image-uploader (sendImage)="uploadImage($event)"></app-image-uploader>
       </mat-tab>
-      <mat-tab label="Classify image"></mat-tab>
-      <mat-tab label="Get classified image"></mat-tab>
+      <mat-tab label="Classify image">
+        <app-image-uploader (sendImage)="classifyImage($event)"></app-image-uploader>
+        <ng-container *ngIf="classificationRequestId !== ''">
+          Your request id: {{classificationRequestId}}
+        </ng-container>
+      </mat-tab>
+      <mat-tab label="Get classified image">
+        <form class="getClassReport" [formGroup]="getClassificationResultForm">
+          <mat-form-field>
+            <mat-label>Insert your request ID</mat-label>
+            <input matInput type="text" [formControl]="getClassificationResultForm.controls.requestId">
+          </mat-form-field>
+          <button mat-button type="submit" (click)="reportRequestSubmit()" [disabled]="getClassificationResultForm.invalid">Submit</button>
+        </form>
+        <ng-container *ngIf="classificationReport !== undefined">
+          <mat-card>
+            <mat-card-header>
+              Reconstructed image
+            </mat-card-header>
+            <mat-card-content>
+              <img src="{{classificationReport.reconstructed}}">
+              Loss value: {{classificationReport.loss}}
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+      </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="responses">
+<!--  <div class="responses">
     <ng-container *ngIf="tabIndex == 0 && images.length > 0">
       <app-image-slider [images]="images"></app-image-slider>
     </ng-container>
     <ng-container *ngIf="tabIndex == 0 && images.length < 1">
       <p>No images have been retrieved yet.</p>
     </ng-container>
-  </div>
+    <ng-container *ngIf="tabIndex == 2 && classificationRequestId === ''">
+      <p>No response from classification yet</p>
+    </ng-container>
+    <ng-container *ngIf
+  </div>-->
 
 </div>
