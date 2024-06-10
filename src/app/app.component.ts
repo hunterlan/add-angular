@@ -52,7 +52,10 @@ export class AppComponent {
     if (this.getClassificationResultForm.valid) {
       const form = this.getClassificationResultForm.value;
       this.classificationService.get(form.requestId!).subscribe({
-        next: (value) => {this.classificationReport = value},
+        next: (value) => {
+          this.classificationReport = value;
+          this.classificationReport.reconstructed = this.classificationReport.reconstructed.replaceAll('\'' ,'').replace('b', 'data:image/png;base64,');
+        },
         error: () => {}
       });
     }
