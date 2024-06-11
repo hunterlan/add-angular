@@ -1,1 +1,5 @@
-<img src="{{images[currentIndexImage]}}" alt=""/>
+<div>
+  <div (click)="goToPrevious()" class="leftArrow">❰</div>
+  <img class="images" src="{{images[currentIndexImage]}}" alt=""/>
+  <div (click)="goToNext()" class="rightArrow">❱</div>
+</div>
